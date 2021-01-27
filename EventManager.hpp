@@ -40,8 +40,18 @@ enum class Event{
     GUI_Clicked, GUI_Released, GUI_Hovered, GUI_Leave
 };
 
-struct EventDetails{};
+struct EventInfo{
 
+};
+struct EventDetails{
+
+};
+
+struct Binding{
+    Binding();
+    std::vector<std::pair<Event, EventInfo>> m_events;
+    int count;
+};
 using CallbackContainer = std::unordered_map<std::string, std::function<void(EventDetails*)>>;
 using Callbacks = std::unordered_map<StateType, CallbackContainer>;
 class EventManager {
