@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.0)
+project(Events)
+set(CMAKE_CXX_STANDARD 20)
+find_package(SFML 2 COMPONENTS system window graphics)
+set(SOURCES main.cpp main.cpp Application.cpp Application.hpp Window.cpp Window.hpp EventManager.cpp EventManager.hpp GUI/GuiEvent.hpp GUI/GuiManager.cpp GUI/GuiManager.hpp StateManager.cpp StateManager.hpp BaseState.cpp BaseState.hpp SharedContext.hpp MenuState.cpp MenuState.hpp Logger.cpp Logger.hpp GameState.cpp GameState.hpp ECS/EntityManager.cpp ECS/EntityManager.hpp ECS/SystemManager.cpp ECS/SystemManager.hpp)
+add_executable(${PROJECT_NAME} ${SOURCES})
+target_link_libraries(${PROJECT_NAME} sfml-system sfml-window sfml-graphics)
