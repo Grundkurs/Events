@@ -44,13 +44,20 @@ struct EventInfo{
 
 };
 struct EventDetails{
+    explicit EventDetails(const std::string l_name);
 
+    std::string         m_name;
+private:
+    void clear();
 };
 
 struct Binding{
-    Binding();
+    explicit Binding(const std::string& l_name);
     std::vector<std::pair<Event, EventInfo>> m_events;
-    int count;
+    EventDetails    m_details;
+    // TODO: delete m_name? it may be superflouos since its stored in m_details anyway
+    std::string     m_name;
+    int             m_count;
 };
 using CallbackContainer = std::unordered_map<std::string, std::function<void(EventDetails*)>>;
 using Callbacks = std::unordered_map<StateType, CallbackContainer>;
