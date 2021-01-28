@@ -13,6 +13,7 @@
 #include <unordered_map>
 #include <iostream>
 #include <sstream>
+#include <variant>
 
 enum class Event{
     Closed              = sf::Event::Closed,                 ///< The window requested to be closed (no data)
@@ -41,7 +42,9 @@ enum class Event{
 };
 
 struct EventInfo{
-
+    EventInfo(int l_code = 0);
+    EventInfo(const GUI_Event& l_event);
+    std::variant<int, GUI_Event>    m_info;
 };
 struct EventDetails{
     explicit EventDetails(const std::string l_name);
