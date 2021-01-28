@@ -4,6 +4,21 @@
 
 #include "EventManager.hpp"
 
+EventDetails::EventDetails(const std::string l_name)
+: m_name(l_name){
+    clear();
+}
+
+void EventDetails::clear() {
+// don't clear name since its always needed and will never change
+}
+
+Binding::Binding(const std::string &l_name)
+: m_events(), m_details(l_name), m_name(l_name), m_count(0){
+
+}
+
+
 void EventManager::update() {
 
 }

@@ -40,8 +40,25 @@ enum class Event{
     GUI_Clicked, GUI_Released, GUI_Hovered, GUI_Leave
 };
 
-struct EventDetails{};
+struct EventInfo{
 
+};
+struct EventDetails{
+    explicit EventDetails(const std::string l_name);
+
+    std::string         m_name;
+private:
+    void clear();
+};
+
+struct Binding{
+    explicit Binding(const std::string& l_name);
+    std::vector<std::pair<Event, EventInfo>> m_events;
+    EventDetails    m_details;
+    // TODO: delete m_name? it may be superfluous since its stored in m_details anyway
+    std::string     m_name;
+    int             m_count;
+};
 using CallbackContainer = std::unordered_map<std::string, std::function<void(EventDetails*)>>;
 using Callbacks = std::unordered_map<StateType, CallbackContainer>;
 class EventManager {
