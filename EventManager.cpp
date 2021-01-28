@@ -91,6 +91,21 @@ void EventManager::load_bindings() {
                 tempss << "ERROR in EventManager::load_bindings: file " << file_path << " binding " << bindingName
                 << " has an entry with no separator";
                 Logger::get_instance().log(tempss.str());
+                break; // exit inner while-loop, go to next line
+            }
+            int firstChunk = std::stoi(entry.substr(0,first_separator));
+            Event event = Event(firstChunk);
+            if( event == Event::GUI_Clicked || event == Event::GUI_Hovered ||
+                event == Event::GUI_Leave   || event == Event::GUI_Released ){
+                // there must be more than one separator in an entry (3 chunks), thus take care of another separator
+                std::size_t second_separator = entry.find_first_of(':', first_separator + 1);
+                if(second_separator == std::string::npos){
+                    std::stringstream tempss{};
+                    tempss << "ERROR in EventManager::load_bindings: file " << file_path << " binding " << bindingName
+                           << " has only one separator but there should be two separators";
+                    Logger::get_instance().log(tempss.str());
+                    break; // exit inner while-loop, go to next line
+                }
             }
         }
     }
