@@ -83,7 +83,16 @@ void EventManager::load_bindings() {
         std::string bindingName{};
         ss >> bindingName;
         std::unique_ptr<Binding> binding = std::make_unique<Binding>(bindingName);
-
+        std::string entry{};
+        while (ss >> entry){
+            std::size_t first_separator = entry.find_first_of(':');
+            if(first_separator == std::string::npos){
+                std::stringstream tempss{};
+                tempss << "ERROR in EventManager::load_bindings: file " << file_path << " binding " << bindingName
+                << " has an entry with no separator";
+                Logger::get_instance().log(tempss.str());
+            }
+        }
     }
     file.close();
 }
