@@ -5,6 +5,18 @@
 #include "EventManager.hpp"
 #include "Utils.hpp"
 
+namespace {
+    GUI_Event_Type convert_eventType_to_GUI_event_type(Event l_eventType){
+        switch (l_eventType){
+            case(Event::GUI_Clicked): { return GUI_Event_Type::Click;}
+            case(Event::GUI_Hovered): { return GUI_Event_Type::Hover;}
+            case(Event::GUI_Released): { return GUI_Event_Type::Release;}
+            case(Event::GUI_Leave): { return GUI_Event_Type::Leave;}
+            default: { return GUI_Event_Type::None; }
+        }
+    }
+}
+
 EventInfo::EventInfo(int l_code)
 : m_info(l_code){
 
@@ -51,7 +63,6 @@ void EventManager::remove_callback(StateType l_stateType, const std::string& l_c
 
 
 void EventManager::update() {
-
 }
 
 void EventManager::handle_events(const sf::Event &l_event) {
@@ -106,8 +117,24 @@ void EventManager::load_bindings() {
                     Logger::get_instance().log(tempss.str());
                     break; // exit inner while-loop, go to next line
                 }
+                std::string secondChunk = entry.substr(first_separator +1, (second_separator - (first_separator + 1)));
+                std::string thirdChunk = entry.substr(second_separator + 1, (entry.size() - second_separator +1));
+                GUI_Event gui_event;
+                GUI_Event_Type gui_event_type;
+                gui_event.m_type = convert_eventType_to_GUI_event_type(event);
+                gui_event.m_interface = secondChunk;
+                gui_event.m_element = thirdChunk;
+                EventInfo event_info{gui_event};
+                binding->m_events.emplace_back(event, event_info);
+            }
+            else{
+//                int secondChunk = std::stoi(entry.substr(first_separator +1, (second_separator - first_separator)));
+//                int thirdChunk = std::stoi(entry.substr(second_separator + 1, (entry.size() - second_separator +1)));
+
             }
         }
+        //after all entries in a line have been proccessed and added to the binding, add binding to all bindings
+        m_bindings.emplace(bindingName, std::move(binding));
     }
     file.close();
 }
