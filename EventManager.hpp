@@ -48,10 +48,10 @@ struct EventInfo{
 };
 struct EventDetails{
     explicit EventDetails(const std::string l_name);
+    void clear();
 
     std::string         m_name;
-private:
-    void clear();
+    sf::Vector2i        m_mousePosition;
 };
 
 struct Binding{
@@ -64,8 +64,10 @@ struct Binding{
 };
 using CallbackContainer = std::unordered_map<std::string, std::function<void(EventDetails*)>>;
 using Callbacks = std::unordered_map<StateType, CallbackContainer>;
+using Bindings = std::unordered_map<std::string, std::unique_ptr<Binding>>;
 class EventManager {
 public:
+    EventManager();
     template<typename T>
     void add_callback(StateType l_stateType,
                       const std::string& l_callback_name,
@@ -80,10 +82,15 @@ public:
     }
     void remove_callback(StateType l_stateType, const std::string& l_callback_name);
     void update();
-    void handleEvents(const sf::Event& l_event);
-    void handleEvents(const GUI_Event& l_event);
+    void handle_events(const sf::Event& l_event);
+    void handle_events(const GUI_Event& l_event);
+
+    void set_state(StateType l_stateType);
 private:
+    void                    load_bindings();
     Callbacks               m_callbacks;
+    Bindings                m_bindings;
+    StateType               m_currentState;
 };
 
 
