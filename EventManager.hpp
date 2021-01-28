@@ -55,7 +55,7 @@ struct Binding{
     explicit Binding(const std::string& l_name);
     std::vector<std::pair<Event, EventInfo>> m_events;
     EventDetails    m_details;
-    // TODO: delete m_name? it may be superflouos since its stored in m_details anyway
+    // TODO: delete m_name? it may be superfluous since its stored in m_details anyway
     std::string     m_name;
     int             m_count;
 };
