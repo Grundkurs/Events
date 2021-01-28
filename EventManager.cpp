@@ -15,7 +15,7 @@ EventInfo::EventInfo(const GUI_Event &l_event)
 
 }
 
-EventDetails::EventDetails(const std::string l_name)
+EventDetails::EventDetails(const std::string& l_name)
 : m_name(l_name){
     clear();
 }
@@ -24,7 +24,7 @@ void EventDetails::clear() {
 // don't clear name since its always needed and will never change
 }
 
-Binding::Binding(const std::string &l_name)
+Binding::Binding(const std::string& l_name)
 : m_events(), m_details(l_name), m_name(l_name), m_count(0){
 
 }
@@ -73,6 +73,17 @@ void EventManager::load_bindings() {
                                    "could not open " + file_path);
         return;
     }
+    std::string line{};
+    while(std::getline(file, line)){
+        if(line.empty()){ continue; }
+        if(line[0] == '#'){ continue; }
+        if(line[0] == '|'){ continue; }
 
+        std::stringstream ss{ line };
+        std::string bindingName{};
+        ss >> bindingName;
+        std::unique_ptr<Binding> binding = std::make_unique<Binding>(bindingName);
+
+    }
     file.close();
 }

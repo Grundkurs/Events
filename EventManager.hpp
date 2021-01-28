@@ -47,7 +47,7 @@ struct EventInfo{
     std::variant<int, GUI_Event>    m_info;
 };
 struct EventDetails{
-    explicit EventDetails(const std::string l_name);
+    explicit EventDetails(const std::string& l_name);
     void clear();
 
     std::string         m_name;
