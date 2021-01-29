@@ -63,6 +63,28 @@ void EventManager::remove_callback(StateType l_stateType, const std::string& l_c
 
 
 void EventManager::update() {
+    for(auto& binding : m_bindings){
+        for(auto& event_eventInfo_pair : binding.second->m_events){
+            switch(event_eventInfo_pair.first){
+                // we know that EventInfo::m_info cannot be an gui_event since current Event is of type
+                // "Realtime_Keyboard", thus it safe to retrieve it by std::get<int>(...)
+                case (Event::Realtime_Keyboard):{
+                    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(std::get<int>(event_eventInfo_pair.second.m_info)))){
+                        ++binding.second->m_count;
+                    }
+                    break;
+                }
+                case (Event::Realtime_Mouse):{
+                    if(sf::Mouse::isButtonPressed(sf::Mouse::Button(std::get<int>(event_eventInfo_pair.second.m_info)))){
+                        ++binding.second->m_count;
+                    }
+                    break;
+                }
+                case (Event::Realtime_Joystick):{ break; }
+                default: { break; }
+            }
+        }
+    }
 }
 
 void EventManager::handle_events(const sf::Event &l_event) {
@@ -104,8 +126,8 @@ void EventManager::load_bindings() {
                 Logger::get_instance().log(tempss.str());
                 break; // exit inner while-loop, go to next line
             }
-            int firstChunk = std::stoi(entry.substr(0,first_separator));
-            Event event = Event(firstChunk);
+            int first_chunk = std::stoi(entry.substr(0,first_separator));
+            Event event = Event(first_chunk);
             if( event == Event::GUI_Clicked || event == Event::GUI_Hovered ||
                 event == Event::GUI_Leave   || event == Event::GUI_Released ){
                 // there must be more than one separator in an entry (3 chunks), thus take care of another separator
@@ -117,23 +139,24 @@ void EventManager::load_bindings() {
                     Logger::get_instance().log(tempss.str());
                     break; // exit inner while-loop, go to next line
                 }
-                std::string secondChunk = entry.substr(first_separator +1, (second_separator - (first_separator + 1)));
-                std::string thirdChunk = entry.substr(second_separator + 1, (entry.size() - second_separator +1));
+                std::string second_chunk = entry.substr(first_separator +1, (second_separator - (first_separator + 1)));
+                std::string third_chunk = entry.substr(second_separator + 1, (entry.size() - second_separator +1));
+
                 GUI_Event gui_event;
-                GUI_Event_Type gui_event_type;
                 gui_event.m_type = convert_eventType_to_GUI_event_type(event);
-                gui_event.m_interface = secondChunk;
-                gui_event.m_element = thirdChunk;
+                gui_event.m_interface = second_chunk;
+                gui_event.m_element = third_chunk;
+
                 EventInfo event_info{gui_event};
                 binding->m_events.emplace_back(event, event_info);
             }
             else{
-//                int secondChunk = std::stoi(entry.substr(first_separator +1, (second_separator - first_separator)));
-//                int thirdChunk = std::stoi(entry.substr(second_separator + 1, (entry.size() - second_separator +1)));
-
+                int secondChunk = std::stoi(entry.substr(first_separator + 1, (entry.size() - first_separator)));
+                EventInfo event_info{ secondChunk };
+                binding->m_events.emplace_back(event, event_info);
             }
         }
-        //after all entries in a line have been proccessed and added to the binding, add binding to all bindings
+        //after all entries in a line have been processed and added to the binding, add binding to all bindings
         m_bindings.emplace(bindingName, std::move(binding));
     }
     file.close();
