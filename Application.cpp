@@ -38,7 +38,7 @@ void Application::update(float l_dt) {
     m_window.update();
     GUI_Event gui_event;
     while(m_gui_manager.poll_GUI_event(gui_event)){
-        m_window.get_eventManager()->handleEvents(gui_event);
+        m_window.get_eventManager()->handle_events(gui_event);
     }
     m_stateManager.update(l_dt);
     m_gui_manager.update(l_dt);

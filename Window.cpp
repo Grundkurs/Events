@@ -17,7 +17,7 @@ void Window::update() {
         if(event.type == sf::Event::EventType::Closed){
             close();
         }
-        m_eventManager.handleEvents(event);
+        m_eventManager.handle_events(event);
     }
     m_eventManager.update();
 

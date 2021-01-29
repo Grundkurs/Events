@@ -18,6 +18,9 @@ public:
         m_renderWindow.clear(l_color);
     }
     inline sf::RenderWindow* get_renderWindow() { return &m_renderWindow; }
+    inline sf::Vector2i getMousePosition([[maybe_unused]] sf::RenderWindow* l_renderWindow = nullptr){
+        return l_renderWindow ? sf::Mouse::getPosition(*l_renderWindow) : sf::Mouse::getPosition();
+    }
     inline EventManager* get_eventManager() { return &m_eventManager; }
     inline sf::FloatRect get_viewField() const {
         sf::Vector2f center = m_renderWindow.getView().getCenter();
