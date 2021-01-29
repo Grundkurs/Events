@@ -128,9 +128,10 @@ void EventManager::load_bindings() {
                 binding->m_events.emplace_back(event, event_info);
             }
             else{
-                std::string tempy = entry.substr(first_separator + 1, (entry.size() - first_separator));
-                std::cout << tempy << "\n";
-
+                int secondChunk = std::stoi(entry.substr(first_separator + 1, (entry.size() - first_separator)));
+                std::cout << secondChunk << "\n";
+                EventInfo event_info{ secondChunk };
+                binding->m_events.emplace_back(event, event_info);
             }
         }
         //after all entries in a line have been processed and added to the binding, add binding to all bindings
