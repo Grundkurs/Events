@@ -128,12 +128,12 @@ void EventManager::load_bindings() {
                 binding->m_events.emplace_back(event, event_info);
             }
             else{
-//                int secondChunk = std::stoi(entry.substr(first_separator +1, (second_separator - first_separator)));
-//                int thirdChunk = std::stoi(entry.substr(second_separator + 1, (entry.size() - second_separator +1)));
+                std::string tempy = entry.substr(first_separator + 1, (entry.size() - first_separator));
+                std::cout << tempy << "\n";
 
             }
         }
-        //after all entries in a line have been proccessed and added to the binding, add binding to all bindings
+        //after all entries in a line have been processed and added to the binding, add binding to all bindings
         m_bindings.emplace(bindingName, std::move(binding));
     }
     file.close();
