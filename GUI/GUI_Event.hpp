@@ -2,8 +2,8 @@
 // Created by Keen on 25.01.2021.
 //
 
-#ifndef EVENTS_GUIEVENT_HPP
-#define EVENTS_GUIEVENT_HPP
+#ifndef EVENTS_GUI_EVENT_HPP
+#define EVENTS_GUI_EVENT_HPP
 
 #include <SFML/System/Vector2.hpp>
 #include <string>
@@ -19,4 +19,4 @@ struct GUI_Event {
 };
 
 
-#endif //EVENTS_GUIEVENT_HPP
+#endif //EVENTS_GUI_EVENT_HPP

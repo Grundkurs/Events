@@ -6,7 +6,7 @@
 #include "Utils.hpp"
 #include "Window.hpp"
 namespace {
-    GUI_Event_Type convert_eventType_to_GUI_event_type(Event l_eventType){
+    GUI_Event_Type convert_Event_to_GUI_Event_Type(Event l_eventType){
         switch (l_eventType){
             case(Event::GUI_Clicked): { return GUI_Event_Type::Click;}
             case(Event::GUI_Hovered): { return GUI_Event_Type::Hover;}
@@ -28,14 +28,15 @@ EventInfo::EventInfo(const GUI_Event &l_event)
 }
 
 EventDetails::EventDetails(const std::string& l_name)
-: m_name(l_name), m_gui_interface(), m_gui_element(), m_mouse_position(), m_size(), m_key_code(), m_text_entered(){
+:   m_name(l_name), m_gui_interface(), m_gui_element(), m_mouse_position(), m_size(), m_key_code(), m_text_entered(),
+    m_gui_eventType(){
     clear();
 }
 
 void EventDetails::clear() {
 // don't clear name since its always needed and will never change
-    m_gui_interface = "";
-    m_gui_element = "";
+    m_gui_interface.clear();
+    m_gui_element.clear();
     m_gui_eventType = GUI_Event_Type::None;
     m_mouse_position = sf::Vector2i{};
     m_size = sf::Vector2u{};
@@ -95,7 +96,7 @@ void EventManager::update() {
                     }
                     break;
                 }
-                case (Event::Realtime_Joystick):{ /*TODO: up for expansion*/ break; }
+                case (Event::Realtime_Joystick):{ /*TODO: up for expansion*/ break; } // NOLINT(bugprone-branch-clone)
                 default: { break; }
             }
         }
@@ -191,7 +192,7 @@ void EventManager::handle_events(const GUI_Event& l_event) {
             event_eventInfo_pair.first != Event::GUI_Hovered && event_eventInfo_pair.first != Event::GUI_Released){
                 continue;;
             }
-            GUI_Event& gui_event = std::get<GUI_Event>(event_eventInfo_pair.second.m_info);
+            auto& gui_event = std::get<GUI_Event>(event_eventInfo_pair.second.m_info);
             if(gui_event.m_type != l_event.m_type){
                 continue;
             }
@@ -204,7 +205,6 @@ void EventManager::handle_events(const GUI_Event& l_event) {
             ++string_binding_pair.second->m_count;
         }
     }
-
 }
 void EventManager::set_state(StateType l_stateType) {
     m_current_state = l_stateType;
@@ -255,11 +255,11 @@ void EventManager::load_bindings() {
                 std::string third_chunk = entry.substr(second_separator + 1, (entry.size() - second_separator +1));
 
                 GUI_Event gui_event;
-                gui_event.m_type = convert_eventType_to_GUI_event_type(event);
+                gui_event.m_type = convert_Event_to_GUI_Event_Type(event);
                 gui_event.m_interface = second_chunk;
                 gui_event.m_element = third_chunk;
 
-                EventInfo event_info{gui_event};
+                EventInfo event_info{ gui_event };
                 binding->m_events.emplace_back(event, event_info);
             }
             else{

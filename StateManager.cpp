@@ -10,7 +10,7 @@
 
 #include <algorithm>
 #include <sstream>
-#include "GUI/GuiManager.hpp"
+#include "GUI/GUI_Manager.hpp"
 StateManager::StateManager()
 : m_states (), m_state_factory(), m_to_delete_states(), m_shared_context(nullptr){
     register_state<MenuState>(StateType::Menu);

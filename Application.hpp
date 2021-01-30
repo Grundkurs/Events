@@ -8,7 +8,7 @@
 #include "Window.hpp"
 #include "SharedContext.hpp"
 #include "StateManager.hpp"
-#include "GUI/GuiManager.hpp"
+#include "GUI/GUI_Manager.hpp"
 
 class Application {
 public:

@@ -2,18 +2,10 @@
 // Created by Keen on 25.01.2021.
 //
 
-#include "GuiManager.hpp"
+#include "GUI_Manager.hpp"
 #include <iostream>
 GUI_Manager::GUI_Manager()
 : m_gui_events(), m_current_state(StateType::Global), m_shared_context(nullptr){}
-
-bool GUI_Manager::poll_GUI_event(GUI_Event& l_gui_event) {
-    if(m_gui_events[m_current_state].empty()) { return false; }
-
-    l_gui_event = m_gui_events[m_current_state].front();
-    m_gui_events[m_current_state].pop();
-    return true;
-}
 
 void GUI_Manager::add_event(const GUI_Event& l_gui_event) {
     m_gui_events[m_current_state].push(l_gui_event);

@@ -6,7 +6,7 @@
 #define EVENTS_EVENTMANAGER_HPP
 
 #include "StateManager.hpp"
-#include "GUI/GuiEvent.hpp"
+#include "GUI/GUI_Event.hpp"
 #include "Logger.hpp"
 #include <SFML/Window/Event.hpp>
 #include <functional>
