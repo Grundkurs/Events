@@ -8,7 +8,6 @@
 Window::Window(sf::Vector2u l_size) : m_renderWindow(), m_eventManager(), m_size(l_size),
 m_is_open(true), m_is_fullScreen(false){
     create_window();
-    m_eventManager.add_callback(StateType::Global, "toggle_fullScreen", &Window::toggle_fullscreen, this);
 }
 
 void Window::update() {
@@ -37,3 +36,4 @@ void Window::toggle_fullscreen([[maybe_unused]] EventDetails *l_details) {
     m_is_fullScreen = !m_is_fullScreen;
     create_window();
 }
+

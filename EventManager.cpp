@@ -61,7 +61,6 @@ void EventManager::remove_callback(StateType l_stateType, const std::string& l_c
     foundContainer->second.erase(foundCallback);
 }
 
-
 void EventManager::update() {
     for(auto& string_binding_pair : m_bindings){
         for(auto& event_eventInfo_pair : string_binding_pair.second->m_events){
@@ -86,14 +85,26 @@ void EventManager::update() {
         }
         // when all events of a binding have been triggered, activate matching callback
         if(string_binding_pair.second->m_count == string_binding_pair.second->m_events.size()){
+            // check for global callbacks
             auto global_callback_container = m_callbacks.find(StateType::Global);
-            auto found_global_callback = global_callback_container->second.find(string_binding_pair.first);
-
+            if(global_callback_container != m_callbacks.end()){
+                auto found_global_callback = global_callback_container->second.find(string_binding_pair.first);
+                if(found_global_callback != global_callback_container->second.end()){
+                    found_global_callback->second(&string_binding_pair.second->m_details);
+                }
+            }
+            // check for local callbacks
+            auto local_callback_container = m_callbacks.find(m_currentState);
+            if(local_callback_container != m_callbacks.end()){
+                auto found_local_callback = local_callback_container->second.find(string_binding_pair.first);
+                if(found_local_callback != local_callback_container->second.end()){
+                    found_local_callback->second(&string_binding_pair.second->m_details);
+                }
+            }
         }
         string_binding_pair.second->m_count = 0;
         string_binding_pair.second->m_details.clear();
     }
-
 }
 
 void EventManager::handle_events(const sf::Event &l_event) {
