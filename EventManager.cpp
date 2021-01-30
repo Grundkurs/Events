@@ -28,12 +28,15 @@ EventInfo::EventInfo(const GUI_Event &l_event)
 }
 
 EventDetails::EventDetails(const std::string& l_name)
-: m_name(l_name), m_mouse_position(), m_size(), m_key_code(), m_text_entered(){
+: m_name(l_name), m_gui_interface(), m_gui_element(), m_mouse_position(), m_size(), m_key_code(), m_text_entered(){
     clear();
 }
 
 void EventDetails::clear() {
 // don't clear name since its always needed and will never change
+    m_gui_interface = "";
+    m_gui_element = "";
+    m_gui_eventType = GUI_Event_Type::None;
     m_mouse_position = sf::Vector2i{};
     m_size = sf::Vector2u{};
     m_key_code = -1;
@@ -177,13 +180,27 @@ void EventManager::handle_events(const sf::Event &l_event) {
             }
         }
     }
-
 }
 
-void EventManager::handle_events(const GUI_Event &l_event) {
+void EventManager::handle_events(const GUI_Event& l_event) {
     for(auto& string_binding_pair : m_bindings) {
         for (auto &event_eventInfo_pair : string_binding_pair.second->m_events) {
-
+            // in event_eventInfo_pair both std::variant<int, GUI_Event> are present, thus we must make sure that
+            // only GUI_Events are processed!
+            if(event_eventInfo_pair.first != Event::GUI_Clicked && event_eventInfo_pair.first != Event::GUI_Leave &&
+            event_eventInfo_pair.first != Event::GUI_Hovered && event_eventInfo_pair.first != Event::GUI_Released){
+                continue;;
+            }
+            GUI_Event& gui_event = std::get<GUI_Event>(event_eventInfo_pair.second.m_info);
+            if(gui_event.m_type != l_event.m_type){
+                continue;
+            }
+            if(gui_event.m_interface != l_event.m_interface || gui_event.m_element != l_event.m_element ){
+                continue;
+            }
+            string_binding_pair.second->m_details.m_gui_element = l_event.m_element;
+            string_binding_pair.second->m_details.m_gui_interface = l_event.m_interface;
+            ++string_binding_pair.second->m_count;
         }
     }
 

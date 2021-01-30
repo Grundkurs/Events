@@ -9,7 +9,7 @@ int main(){
         Application application;
         application.run();
     } catch (const std::exception& e) {
-        std::cout << e.what() << "\n";
+        std::cout << "error: " << e.what() << "\n";
     }
     return 0;
 }

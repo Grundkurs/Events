@@ -42,8 +42,8 @@ enum class Event{
 };
 
 struct EventInfo{
-    EventInfo(int l_code = 0);
-    EventInfo(const GUI_Event& l_event);
+    explicit EventInfo(int l_code = 0);
+    explicit EventInfo(const GUI_Event& l_event);
     std::variant<int, GUI_Event>    m_info;
 };
 struct EventDetails{
@@ -51,10 +51,13 @@ struct EventDetails{
     void clear();
 
     std::string         m_name;
+    std::string         m_gui_interface;
+    std::string         m_gui_element;
     sf::Vector2i        m_mouse_position;
     sf::Vector2u        m_size;
     int                 m_key_code;
     sf::Uint32          m_text_entered; // stores UTF-32 Unicode value of the character
+    GUI_Event_Type      m_gui_eventType;
 };
 
 struct Binding{

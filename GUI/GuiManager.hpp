@@ -14,7 +14,7 @@ class GUI_Manager {
 public:
     GUI_Manager();
     bool poll_GUI_event(GUI_Event& l_gui_event);
-    void add_event(GUI_Event l_gui_event);
+    void add_event(const GUI_Event& l_gui_event);
     void set_shared_context(SharedContext* l_shared_context);
     void set_state(StateType l_stateType);
     void update(const float& l_dt);

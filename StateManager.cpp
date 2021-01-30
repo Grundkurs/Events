@@ -10,7 +10,7 @@
 
 #include <algorithm>
 #include <sstream>
-
+#include "GUI/GuiManager.hpp"
 StateManager::StateManager()
 : m_states (), m_state_factory(), m_to_delete_states(), m_shared_context(nullptr){
     register_state<MenuState>(StateType::Menu);
@@ -30,6 +30,7 @@ void StateManager::set_shared_context(SharedContext* l_shared_context) {
 
 void StateManager::switch_to(StateType l_stateType) {
     m_shared_context->m_eventManager->set_state(l_stateType);
+    m_shared_context->m_gui_manager->set_state(l_stateType);
     // check first if state already exists. If not, create a new state
     for(auto i = 0; i < m_states.size(); ++i){
         if(m_states[i].first == l_stateType){

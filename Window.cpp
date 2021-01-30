@@ -36,4 +36,3 @@ void Window::toggle_fullscreen([[maybe_unused]] EventDetails *l_details) {
     m_is_fullScreen = !m_is_fullScreen;
     create_window();
 }
-
