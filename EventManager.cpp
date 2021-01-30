@@ -63,20 +63,20 @@ void EventManager::remove_callback(StateType l_stateType, const std::string& l_c
 
 
 void EventManager::update() {
-    for(auto& binding : m_bindings){
-        for(auto& event_eventInfo_pair : binding.second->m_events){
+    for(auto& string_binding_pair : m_bindings){
+        for(auto& event_eventInfo_pair : string_binding_pair.second->m_events){
             switch(event_eventInfo_pair.first){
                 // we know that EventInfo::m_info cannot be an gui_event since current Event is of type
                 // "Realtime_Keyboard", thus it safe to retrieve it by std::get<int>(...)
                 case (Event::Realtime_Keyboard):{
                     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(std::get<int>(event_eventInfo_pair.second.m_info)))){
-                        ++binding.second->m_count;
+                        ++string_binding_pair.second->m_count;
                     }
                     break;
                 }
                 case (Event::Realtime_Mouse):{
                     if(sf::Mouse::isButtonPressed(sf::Mouse::Button(std::get<int>(event_eventInfo_pair.second.m_info)))){
-                        ++binding.second->m_count;
+                        ++string_binding_pair.second->m_count;
                     }
                     break;
                 }
@@ -84,7 +84,16 @@ void EventManager::update() {
                 default: { break; }
             }
         }
+        // when all events of a binding have been triggered, activate matching callback
+        if(string_binding_pair.second->m_count == string_binding_pair.second->m_events.size()){
+            auto global_callback_container = m_callbacks.find(StateType::Global);
+            auto found_global_callback = global_callback_container->second.find(string_binding_pair.first);
+
+        }
+        string_binding_pair.second->m_count = 0;
+        string_binding_pair.second->m_details.clear();
     }
+
 }
 
 void EventManager::handle_events(const sf::Event &l_event) {
