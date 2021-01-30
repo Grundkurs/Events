@@ -5,7 +5,7 @@
 #ifndef EVENTS_GUI_BUTTON_HPP
 #define EVENTS_GUI_BUTTON_HPP
 
-
+#include "GUI_Element.hpp"
 class GUI_Button {
 
 };
