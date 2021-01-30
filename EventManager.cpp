@@ -28,12 +28,14 @@ EventInfo::EventInfo(const GUI_Event &l_event)
 }
 
 EventDetails::EventDetails(const std::string& l_name)
-: m_name(l_name){
+: m_name(l_name), m_mousePosition(), m_key_code(){
     clear();
 }
 
 void EventDetails::clear() {
 // don't clear name since its always needed and will never change
+    m_mousePosition = sf::Vector2i{};
+    m_key_code = -1;
 }
 
 Binding::Binding(const std::string& l_name)
@@ -108,10 +110,45 @@ void EventManager::update() {
 }
 
 void EventManager::handle_events(const sf::Event &l_event) {
+    for(auto& string_binding_pair : m_bindings) {
+        for (auto &event_eventInfo_pair : string_binding_pair.second->m_events) {
+            // convert SFML-Type to own Event Type;
+            // conversion is safe since "enum class Event" assigns its members to SFML-Events
+            Event SFML_event = Event(l_event.type);
+            // dont process GUI-Events here. Those need to be processed in handle_events(GUI_Event&),
+            // so move to next possible entry in binding
+            if(SFML_event == Event::GUI_Clicked || SFML_event == Event::GUI_Hovered ||
+            SFML_event == Event::GUI_Leave || SFML_event == Event::GUI_Released){
+                continue;
+            }
+            // if passed sfml-event-type does not match eventtype of current entry, move to next entry;
+            // following  entries could still be relevant for triggering the current binding
+            if(SFML_event != event_eventInfo_pair.first){
+                continue;
+            }
+            // handle Keyboard inputs
+            if(SFML_event == Event::Key_Pressed || SFML_event == Event::Key_Released){
+                if (l_event.key.code == sf::Keyboard::Key(std::get<int>(event_eventInfo_pair.second.m_info))){
+                    if(string_binding_pair.second->m_details.m_key_code == -1){
+                        string_binding_pair.second->m_details.m_key_code = l_event.key.code;
+                    }
+                    ++string_binding_pair.second->m_count;
+                }
+            }
+            else if (SFML_event == Event::M_Button_Pressed ||SFML_event == Event::M_Button_Released){
+
+            }
+        }
+    }
 
 }
 
 void EventManager::handle_events(const GUI_Event &l_event) {
+    for(auto& string_binding_pair : m_bindings) {
+        for (auto &event_eventInfo_pair : string_binding_pair.second->m_events) {
+
+        }
+    }
 
 }
 void EventManager::set_state(StateType l_stateType) {

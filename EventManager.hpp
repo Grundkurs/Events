@@ -52,6 +52,7 @@ struct EventDetails{
 
     std::string         m_name;
     sf::Vector2i        m_mousePosition;
+    int                 m_key_code;
 };
 
 struct Binding{
