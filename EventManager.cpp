@@ -28,14 +28,16 @@ EventInfo::EventInfo(const GUI_Event &l_event)
 }
 
 EventDetails::EventDetails(const std::string& l_name)
-: m_name(l_name), m_mousePosition(), m_key_code(){
+: m_name(l_name), m_mouse_position(), m_size(), m_key_code(), m_text_entered(){
     clear();
 }
 
 void EventDetails::clear() {
 // don't clear name since its always needed and will never change
-    m_mousePosition = sf::Vector2i{};
+    m_mouse_position = sf::Vector2i{};
+    m_size = sf::Vector2u{};
     m_key_code = -1;
+    m_text_entered = 0; // NULL 0x00000000
 }
 
 Binding::Binding(const std::string& l_name)
@@ -137,6 +139,23 @@ void EventManager::handle_events(const sf::Event &l_event) {
             }
             else if (SFML_event == Event::M_Button_Pressed ||SFML_event == Event::M_Button_Released){
 
+            }
+            // matching events that do not have additional requirements or do not need extra-work
+            else{
+                switch(SFML_event){
+                    case(Event::Resized):{
+                        string_binding_pair.second->m_details.m_size.x = l_event.size.width;
+                        string_binding_pair.second->m_details.m_size.y = l_event.size.height;
+                        break;
+                    }
+                    case(Event::Text_Entered):{
+                        l_event.text.unicode;
+                        break;
+                    }
+                }
+                // since sfml-event matches with entry and no other requirements are existent (like matching key-codes)
+                // the trigger has to be counted
+                ++string_binding_pair.second->m_count;
             }
         }
     }

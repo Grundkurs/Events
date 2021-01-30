@@ -35,6 +35,7 @@ public:
 private:
     void create_window();
     void toggle_fullscreen([[maybe_unused]] EventDetails* l_details = nullptr);
+
 private:
     sf::RenderWindow        m_renderWindow;
     EventManager            m_eventManager;

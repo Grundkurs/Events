@@ -51,8 +51,10 @@ struct EventDetails{
     void clear();
 
     std::string         m_name;
-    sf::Vector2i        m_mousePosition;
+    sf::Vector2i        m_mouse_position;
+    sf::Vector2u        m_size;
     int                 m_key_code;
+    sf::Uint32          m_text_entered; // stores UTF-32 Unicode value of the character
 };
 
 struct Binding{
