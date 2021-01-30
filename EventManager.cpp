@@ -4,7 +4,7 @@
 
 #include "EventManager.hpp"
 #include "Utils.hpp"
-
+#include "Window.hpp"
 namespace {
     GUI_Event_Type convert_eventType_to_GUI_event_type(Event l_eventType){
         switch (l_eventType){
@@ -75,17 +75,24 @@ void EventManager::update() {
                 // "Realtime_Keyboard", thus it safe to retrieve it by std::get<int>(...)
                 case (Event::Realtime_Keyboard):{
                     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(std::get<int>(event_eventInfo_pair.second.m_info)))){
+                        if(string_binding_pair.second->m_details.m_key_code == -1){
+                            string_binding_pair.second->m_details.m_key_code = std::get<int>(event_eventInfo_pair.second.m_info);
+                        }
                         ++string_binding_pair.second->m_count;
                     }
                     break;
                 }
                 case (Event::Realtime_Mouse):{
                     if(sf::Mouse::isButtonPressed(sf::Mouse::Button(std::get<int>(event_eventInfo_pair.second.m_info)))){
+                        if(string_binding_pair.second->m_details.m_key_code == -1){
+                            string_binding_pair.second->m_details.m_key_code = std::get<int>(event_eventInfo_pair.second.m_info);
+                        }
+                        string_binding_pair.second->m_details.m_mouse_position = Window::getMousePosition();
                         ++string_binding_pair.second->m_count;
                     }
                     break;
                 }
-                case (Event::Realtime_Joystick):{ break; }
+                case (Event::Realtime_Joystick):{ /*TODO: up for expansion*/ break; }
                 default: { break; }
             }
         }
@@ -158,6 +165,11 @@ void EventManager::handle_events(const sf::Event &l_event) {
                     }
                     case(Event::Text_Entered):{
                         string_binding_pair.second->m_details.m_text_entered = l_event.text.unicode;
+                        break;
+                    }
+                    case(Event::M_Moved):{
+                        string_binding_pair.second->m_details.m_mouse_position.x = l_event.mouseMove.x;
+                        string_binding_pair.second->m_details.m_mouse_position.y = l_event.mouseMove.y;
                         break;
                     }
                 }

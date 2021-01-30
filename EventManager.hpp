@@ -16,29 +16,29 @@
 #include <variant>
 
 enum class Event{
-    Closed              = sf::Event::Closed,                 ///< The window requested to be closed (no data)
-    Resized             = sf::Event::Resized,                ///< The window was resized (data in event.size)
-    Lost_Focus          = sf::Event::LostFocus,              ///< The window lost the focus (no data)
-    Gained_Focus        = sf::Event::GainedFocus,            ///< The window gained the focus (no data)
-    Text_Entered        = sf::Event::TextEntered,            ///< A character was entered (data in event.text)
-    Key_Pressed         = sf::Event::KeyPressed,             ///< A key was pressed (data in event.key)
-    Key_Released        = sf::Event::KeyReleased,            ///< A key was released (data in event.key)
-    M_Wheel_Moved       = sf::Event::MouseWheelMoved,        ///< The mouse wheel was scrolled (data in event.mouseWheel) (deprecated)
-    M_Wheel_Scrolled    = sf::Event::MouseWheelScrolled,     ///< The mouse wheel was scrolled (data in event.mouseWheelScroll)
-    M_Button_Pressed    = sf::Event::MouseButtonPressed,     ///< A mouse button was pressed (data in event.mouseButton)
-    M_Button_Released   = sf::Event::MouseButtonReleased,    ///< A mouse button was released (data in event.mouseButton)
-    M_Moved             = sf::Event::MouseMoved,             ///< The mouse cursor moved (data in event.mouseMove)
-    M_Entered           = sf::Event::MouseEntered,           ///< The mouse cursor entered the area of the window (no data)
-    M_Left              = sf::Event::MouseLeft,              ///< The mouse cursor left the area of the window (no data)
-    J_Button_Pressed    = sf::Event::JoystickButtonPressed,  ///< A joystick button was pressed (data in event.joystickButton)
-    J_Button_Released   = sf::Event::JoystickButtonReleased, ///< A joystick button was released (data in event.joystickButton)
-    J_Moved             = sf::Event::JoystickMoved,          ///< The joystick moved along an axis (data in event.joystickMove)
-    J_Connected         = sf::Event::JoystickConnected,      ///< A joystick was connected (data in event.joystickConnect)
-    J_Disconnected      = sf::Event::JoystickDisconnected,   ///< A joystick was disconnected (data in event.joystickConnect)
-    Realtime_Keyboard   = sf::Event::Count + 1,
-    Realtime_Mouse,
-    Realtime_Joystick,
-    GUI_Clicked, GUI_Released, GUI_Hovered, GUI_Leave
+    Closed              = sf::Event::Closed,                 ///<0 The window requested to be closed (no data)
+    Resized             = sf::Event::Resized,                ///<1 The window was resized (data in event.size)
+    Lost_Focus          = sf::Event::LostFocus,              ///<2 The window lost the focus (no data)
+    Gained_Focus        = sf::Event::GainedFocus,            ///<3 The window gained the focus (no data)
+    Text_Entered        = sf::Event::TextEntered,            ///<4 A character was entered (data in event.text)
+    Key_Pressed         = sf::Event::KeyPressed,             ///<5 A key was pressed (data in event.key)
+    Key_Released        = sf::Event::KeyReleased,            ///<6 A key was released (data in event.key)
+    M_Wheel_Moved       = sf::Event::MouseWheelMoved,        ///<7 The mouse wheel was scrolled (data in event.mouseWheel) (deprecated)
+    M_Wheel_Scrolled    = sf::Event::MouseWheelScrolled,     ///<8 The mouse wheel was scrolled (data in event.mouseWheelScroll)
+    M_Button_Pressed    = sf::Event::MouseButtonPressed,     ///<9 A mouse button was pressed (data in event.mouseButton)
+    M_Button_Released   = sf::Event::MouseButtonReleased,    ///<10 A mouse button was released (data in event.mouseButton)
+    M_Moved             = sf::Event::MouseMoved,             ///<11 The mouse cursor moved (data in event.mouseMove)
+    M_Entered           = sf::Event::MouseEntered,           ///<12 The mouse cursor entered the area of the window (no data)
+    M_Left              = sf::Event::MouseLeft,              ///<13 The mouse cursor left the area of the window (no data)
+    J_Button_Pressed    = sf::Event::JoystickButtonPressed,  ///<14 A joystick button was pressed (data in event.joystickButton)
+    J_Button_Released   = sf::Event::JoystickButtonReleased, ///<15 A joystick button was released (data in event.joystickButton)
+    J_Moved             = sf::Event::JoystickMoved,          ///<16 The joystick moved along an axis (data in event.joystickMove)
+    J_Connected         = sf::Event::JoystickConnected,      ///<17 A joystick was connected (data in event.joystickConnect)
+    J_Disconnected      = sf::Event::JoystickDisconnected,   ///<18 A joystick was disconnected (data in event.joystickConnect)
+    Realtime_Keyboard   = sf::Event::Count + 1,              // 24 (23 + 1)
+    Realtime_Mouse,                                          // 25
+    Realtime_Joystick,                                       // 26
+    GUI_Clicked, GUI_Released, GUI_Hovered, GUI_Leave        // 27,28,29,30
 };
 
 struct EventInfo{
