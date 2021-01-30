@@ -90,10 +90,11 @@ public:
 
     void set_state(StateType l_stateType);
 private:
-    void                    load_bindings();
+    void load_bindings();
+
     Callbacks               m_callbacks;
     Bindings                m_bindings;
-    StateType               m_currentState;
+    StateType               m_current_state;
 };
 
 

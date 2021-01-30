@@ -45,7 +45,9 @@ Binding::Binding(const std::string& l_name)
 
 }
 
-EventManager::EventManager() {
+EventManager::EventManager()
+// as long as StateManager does not register a local state, the default state of EventManager is Global
+: m_callbacks(), m_bindings(), m_current_state(StateType::Global) {
     load_bindings();
 }
 
@@ -98,7 +100,7 @@ void EventManager::update() {
                 }
             }
             // check for local callbacks
-            auto local_callback_container = m_callbacks.find(m_currentState);
+            auto local_callback_container = m_callbacks.find(m_current_state);
             if(local_callback_container != m_callbacks.end()){
                 auto found_local_callback = local_callback_container->second.find(string_binding_pair.first);
                 if(found_local_callback != local_callback_container->second.end()){
@@ -137,8 +139,14 @@ void EventManager::handle_events(const sf::Event &l_event) {
                     ++string_binding_pair.second->m_count;
                 }
             }
+            //handle mouse inputs
             else if (SFML_event == Event::M_Button_Pressed ||SFML_event == Event::M_Button_Released){
-
+                if(l_event.mouseButton.button == sf::Mouse::Button(std::get<int>(event_eventInfo_pair.second.m_info))){
+                    if(string_binding_pair.second->m_details.m_key_code == -1){
+                        string_binding_pair.second->m_details.m_key_code = l_event.mouseButton.button;
+                    }
+                    ++string_binding_pair.second->m_count;
+                }
             }
             // matching events that do not have additional requirements or do not need extra-work
             else{
@@ -149,12 +157,10 @@ void EventManager::handle_events(const sf::Event &l_event) {
                         break;
                     }
                     case(Event::Text_Entered):{
-                        l_event.text.unicode;
+                        string_binding_pair.second->m_details.m_text_entered = l_event.text.unicode;
                         break;
                     }
                 }
-                // since sfml-event matches with entry and no other requirements are existent (like matching key-codes)
-                // the trigger has to be counted
                 ++string_binding_pair.second->m_count;
             }
         }
@@ -171,7 +177,7 @@ void EventManager::handle_events(const GUI_Event &l_event) {
 
 }
 void EventManager::set_state(StateType l_stateType) {
-    m_currentState = l_stateType;
+    m_current_state = l_stateType;
 }
 
 void EventManager::load_bindings() {
