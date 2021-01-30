@@ -5,9 +5,12 @@
 #ifndef EVENTS_GUI_SCROLLBAR_HPP
 #define EVENTS_GUI_SCROLLBAR_HPP
 
+#include "GUI_Element.hpp"
 
-class GUI_Scrollbar {
-
+class GUI_Scrollbar : public GUI_Element{
+public:
+    GUI_Scrollbar(const std::string& l_name, GUI_Interface* l_owner);
+private:
 };
 
 

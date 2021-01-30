@@ -6,8 +6,12 @@
 #define EVENTS_GUI_TEXTFIELD_HPP
 
 
-class GUI_Textfield {
+#include "GUI_Element.hpp"
 
+class GUI_Textfield : public GUI_Element{
+public:
+    GUI_Textfield(const std::string& l_name, GUI_Interface* l_owner);
+private:
 };
 
 

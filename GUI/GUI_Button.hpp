@@ -6,7 +6,10 @@
 #define EVENTS_GUI_BUTTON_HPP
 
 #include "GUI_Element.hpp"
-class GUI_Button {
+class GUI_Button : public GUI_Element{
+public:
+    GUI_Button(const std::string& l_name, GUI_Interface* l_owner);
+private:
 
 };
 
