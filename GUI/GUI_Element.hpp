@@ -10,7 +10,7 @@
 class GUI_Interface;
 
 enum class GUI_ElementType{
-
+    Window, Label, Scrollbar, Textfield, Button,
 };
 
 class GUI_Element {
