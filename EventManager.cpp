@@ -200,6 +200,7 @@ void EventManager::handle_events(const GUI_Event& l_event) {
             }
             string_binding_pair.second->m_details.m_gui_element = l_event.m_element;
             string_binding_pair.second->m_details.m_gui_interface = l_event.m_interface;
+            string_binding_pair.second->m_details.m_mouse_position = l_event.m_click_coordinates;
             ++string_binding_pair.second->m_count;
         }
     }
