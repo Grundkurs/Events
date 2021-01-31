@@ -17,6 +17,8 @@ m_stateManager(), m_textureManager(), m_gui_manager() {
 
     m_stateManager.switch_to(StateType::Menu);
     m_stateManager.switch_to(StateType::Game);
+
+    m_textureManager.request_resource("ADOM_GUI_BACKGROUND");
 }
 
 void Application::run() {
