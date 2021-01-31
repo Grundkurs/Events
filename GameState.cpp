@@ -15,7 +15,6 @@ GameState::GameState(StateManager *l_stateManager)
 
 void GameState::onCreate() {
     Logger::get_instance().log("GameState::onCreate");
-    m_sprite.setTexture(*m_stateManager->get_shared_context()->m_textureManager->get("ADOM_GUI_BACKGROUND"));
 }
 
 void GameState::activate() {
@@ -35,5 +34,4 @@ void GameState::update(const float &l_dt) {
 }
 
 void GameState::draw() {
-    m_stateManager->get_shared_context()->m_window->get_renderWindow()->draw(m_sprite);
 }

@@ -22,7 +22,6 @@ public:
     void draw() override;
 
 private:
-    sf::Sprite m_sprite;
 };
 
 

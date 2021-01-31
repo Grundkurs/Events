@@ -72,7 +72,6 @@ T* ResourceManager<DERIVED, T>::get(const std::string &l_resource_name) {
         tempss << R"(Error in ResourceManager::get: could not locate resource ")" << l_resource_name
         << R"(" - resources must be requested with ResourceManager::request_resource(resource_name) before usage)";
         Logger::get_instance().log(tempss.str());
-        std::cout << "ResourceManager::get: Could not locate resource " << l_resource_name << "\n";
         return nullptr;
     }
     return found_resource_pair->second.second.get();
@@ -86,7 +85,6 @@ void ResourceManager<DERIVED, T>::request_resource(const std::string &l_resource
         tempss  << "Error in ResourceManager::request_resource: could not find resource " << l_resource_name
                 << " in file " << m_file_path;
         Logger::get_instance().log(tempss.str());
-        std::cout << "ResourceManager::request_resource: could not request resource " << l_resource_name << "\n";
         return;
     }
     auto found_resource = m_resources.find(l_resource_name);
@@ -106,7 +104,21 @@ void ResourceManager<DERIVED, T>::request_resource(const std::string &l_resource
 
 template<typename DERIVED, typename T>
 void ResourceManager<DERIVED, T>::release_resource(const std::string &l_resource_name) {
-
+    auto found_resource = m_resources.find(l_resource_name);
+    if(found_resource == m_resources.end()){
+        std::stringstream tempss{};
+        tempss  << R"(Error in ResourceManager::release_resource: could not find resource ")" << l_resource_name
+                << R"(" to delete in ResourceManager::m_resources)";
+        Logger::get_instance().log(tempss.str());
+        return;
+    }
+    if(found_resource->second.first > 1){
+        --found_resource->second.first;
+    }
+    else{
+        // when only 1 resource left, erase it completely
+        m_resources.erase(found_resource);
+    }
 }
 
 template<typename DERIVED, typename T>
