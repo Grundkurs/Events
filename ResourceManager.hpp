@@ -61,9 +61,6 @@ void ResourceManager<DERIVED, T>::load_paths(const std::string &l_paths) {
             return;
         }
     }
-    for(auto& pair : m_paths){
-        std::cout << pair.first << " : " << pair.second << "\n";
-    }
     file.close();
 }
 
@@ -73,7 +70,7 @@ T* ResourceManager<DERIVED, T>::get(const std::string &l_resource_name) {
     if(found_resource_pair == m_resources.end()){
         std::stringstream tempss{};
         tempss << R"(Error in ResourceManager::get: could not locate resource ")" << l_resource_name
-        << R"(" - resources must be requested first with ResourceManager::request_resource(resource_name) before usage)";
+        << R"(" - resources must be requested with ResourceManager::request_resource(resource_name) before usage)";
         Logger::get_instance().log(tempss.str());
         std::cout << "ResourceManager::get: Could not locate resource " << l_resource_name << "\n";
         return nullptr;

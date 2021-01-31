@@ -8,6 +8,8 @@
 #include "BaseState.hpp"
 #include <SFML/Graphics/RectangleShape.hpp>
 
+#include <SFML/Graphics/Sprite.hpp>
+
 class GameState : public BaseState{
 public:
     GameState(StateManager* l_stateManager);
@@ -20,6 +22,7 @@ public:
     void draw() override;
 
 private:
+    sf::Sprite m_sprite;
 };
 
 
