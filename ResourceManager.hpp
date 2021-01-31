@@ -6,6 +6,7 @@
 #define EVENTS_RESOURCEMANAGER_HPP
 
 #include "Logger.hpp"
+#include "Utils.hpp"
 #include <unordered_map>
 #include <string>
 #include <memory>
@@ -52,13 +53,16 @@ void ResourceManager<DERIVED, T>::load_paths(const std::string &l_paths) {
         std::string left{};
         std::string right{};
         ss >> left >> right;
-        if(!m_paths.emplace().second){
+        if(!m_paths.emplace(left, right).second){
             std::stringstream tempss{};
             tempss  << "Error in ResourceManager::load_paths: could not add " << left <<" and "
                     << right << " to ResourceManager::m_paths";
             Logger::get_instance().log(tempss.str());
             return;
         }
+    }
+    for(auto& pair : m_paths){
+        std::cout << pair.first << " : " << pair.second << "\n";
     }
     file.close();
 }
@@ -90,7 +94,8 @@ void ResourceManager<DERIVED, T>::request_resource(const std::string &l_resource
     }
     auto found_resource = m_resources.find(l_resource_name);
     if(found_resource == m_resources.end()){
-        if(!m_resources.emplace(l_resource_name, std::make_pair(1, loadResource(found_filePath->second))).second()){
+        auto resource = loadResource(Utils::get_source_dir() + found_filePath->second);
+        if(!m_resources.emplace(l_resource_name, std::make_pair(1, std::move(resource))).second){
             std::stringstream tempss{};
             tempss  << R"(Error in ResourceManager::request_resource: could not add resource ")" << l_resource_name
                     << R"( to ResourceManager::m_resources)";

@@ -9,6 +9,7 @@
 #include <SFML/Graphics/Texture.hpp>
 
 class TextureManager : public ResourceManager<TextureManager, sf::Texture>{
+friend ResourceManager;
 public:
     TextureManager();
 private:
