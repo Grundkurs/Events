@@ -129,16 +129,17 @@ void EventManager::handle_events(const sf::Event &l_event) {
         for (auto &event_eventInfo_pair : string_binding_pair.second->m_events) {
             // convert SFML-Type to own Event Type;
             // conversion is safe since "enum class Event" assigns its members to SFML-Events
-            Event SFML_event = Event(l_event.type);
+            Event SFML_event = Event(l_event.type); // NOLINT(modernize-use-auto)
+            Event event = event_eventInfo_pair.first;
             // dont process GUI-Events here. Those need to be processed in handle_events(GUI_Event&),
             // so move to next possible entry in binding
-            if(SFML_event == Event::GUI_Clicked || SFML_event == Event::GUI_Hovered ||
-            SFML_event == Event::GUI_Leave || SFML_event == Event::GUI_Released){
+            if(event == Event::GUI_Clicked || event == Event::GUI_Hovered ||
+            event == Event::GUI_Leave || event == Event::GUI_Released){
                 continue;
             }
             // if passed sfml-event-type does not match eventtype of current entry, move to next entry;
             // following  entries could still be relevant for triggering the current binding
-            if(SFML_event != event_eventInfo_pair.first){
+            if(SFML_event != event){
                 continue;
             }
             // handle Keyboard inputs
