@@ -8,6 +8,7 @@
 #include "Window.hpp"
 #include "SharedContext.hpp"
 #include "StateManager.hpp"
+#include "TextureManager.hpp"
 #include "GUI/GUI_Manager.hpp"
 
 class Application {
@@ -25,6 +26,7 @@ private:
     SharedContext   m_shared_context;
     Window          m_window;
     StateManager    m_stateManager;
+    TextureManager  m_textureManager;
     GUI_Manager     m_gui_manager;
 };
 

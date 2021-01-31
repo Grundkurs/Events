@@ -6,7 +6,7 @@
 
 Application::Application()
 : m_shared_context(), m_window(sf::Vector2u{800,600}),
-m_stateManager(), m_gui_manager() {
+m_stateManager(), m_textureManager(), m_gui_manager() {
 
     m_shared_context.m_window = &m_window;
     m_shared_context.m_eventManager = m_window.get_eventManager();

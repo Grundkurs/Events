@@ -137,8 +137,8 @@ void EventManager::handle_events(const sf::Event &l_event) {
             event == Event::GUI_Leave || event == Event::GUI_Released){
                 continue;
             }
-            // if passed sfml-event-type does not match eventtype of current entry, move to next entry;
-            // following  entries could still be relevant for triggering the current binding
+            // if passed sfml-event-type does not match event-type of current entry, move to next entry;
+            // following entries could still be relevant for triggering the current binding
             if(SFML_event != event){
                 continue;
             }
