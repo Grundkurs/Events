@@ -25,7 +25,7 @@ private:
     std::string             m_name;
     sf::Vector2f            m_position;
     GUI_Styles              m_styles;
-    GUI_ElementType         m_type;
+    GUI_ElementType         m_element_type;
     GUI_ElementState        m_currentState;
     GUI_Interface*          m_owner;
     bool                    m_needs_redraw;
