@@ -35,7 +35,7 @@ public:
     void add_event(const GUI_Event& l_gui_event);
     void set_shared_context(SharedContext* l_shared_context);
     void set_state(StateType l_stateType);
-
+    void load_interface_from_file(StateType l_stateType, const std::string& l_file_name, const std::string& l_interface_name);
 
     void update(const float& l_dt);
     void draw();

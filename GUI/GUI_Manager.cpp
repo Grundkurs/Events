@@ -7,15 +7,21 @@
 #include "GUI_Label.hpp"
 #include "GUI_Scrollbar.hpp"
 #include "GUI_Textfield.hpp"
-
+#include "../Utils.hpp"
 GUI_Manager::GUI_Manager()
 // as long as StateManager does not register a local state, the default state of GUI_Manager is Global
 : m_gui_events(), m_interfaces(), m_gui_factory(), m_element_types(),
 m_current_state(StateType::Global), m_shared_context(nullptr){
 
-    m_element_types["GUI_Label"] = GUI_ElementType::Label;
-    m_element_types["GUI_Button"] = GUI_ElementType::Button;
-    m_element_types["GUI_Scrollbar"] = GUI_ElementType::Scrollbar;
+    register_gui_element<GUI_Button>(GUI_ElementType::Button);
+    register_gui_element<GUI_Label>(GUI_ElementType::Label);
+    register_gui_element<GUI_Scrollbar>(GUI_ElementType::Scrollbar);
+    register_gui_element<GUI_Textfield>(GUI_ElementType::Textfield);
+
+    m_element_types["Label"] = GUI_ElementType::Label;
+    m_element_types["Button"] = GUI_ElementType::Button;
+    m_element_types["Scrollbar"] = GUI_ElementType::Scrollbar;
+    m_element_types["Textfield"] = GUI_ElementType::Textfield;
 }
 
 void GUI_Manager::add_event(const GUI_Event& l_gui_event) {
@@ -36,4 +42,9 @@ void GUI_Manager::update(const float &l_dt) {
 
 void GUI_Manager::draw() {
 
+}
+
+void GUI_Manager::load_interface_from_file(StateType l_stateType, const std::string &l_file_name,
+                                           const std::string &l_interface_name) {
+    std::string file_path = Utils::get_source_dir() + R"(\resources\???)" + l_file_name;
 }
