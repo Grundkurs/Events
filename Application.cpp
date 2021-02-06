@@ -16,11 +16,8 @@ m_stateManager(), m_textureManager(), m_gui_manager() {
     m_stateManager.set_shared_context(&m_shared_context);
     m_gui_manager.set_shared_context(&m_shared_context);
 
-    m_textureManager.request_resource("ADOM_GUI_BACKGROUND");
-
     m_stateManager.switch_to(StateType::Menu);
     m_stateManager.switch_to(StateType::Game);
-
 }
 
 void Application::run() {
