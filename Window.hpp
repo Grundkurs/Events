@@ -32,6 +32,7 @@ public:
     inline void display(){
         m_renderWindow.display();
     }
+
 private:
     void create_window();
     void toggle_fullscreen([[maybe_unused]] EventDetails* l_details = nullptr);
