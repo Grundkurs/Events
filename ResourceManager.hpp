@@ -88,6 +88,7 @@ void ResourceManager<DERIVED, T>::request_resource(const std::string &l_resource
         return;
     }
     auto found_resource = m_resources.find(l_resource_name);
+    // if this resource has not been loaded yet, load it...
     if(found_resource == m_resources.end()){
         auto resource = loadResource(Utils::get_source_dir() + found_filePath->second);
         if(!m_resources.emplace(l_resource_name, std::make_pair(1, std::move(resource))).second){
@@ -97,6 +98,7 @@ void ResourceManager<DERIVED, T>::request_resource(const std::string &l_resource
             Logger::get_instance().log(tempss.str());
         }
     }
+    //otherwise just register request
     else{
         ++found_resource->second.first;
     }
@@ -112,6 +114,7 @@ void ResourceManager<DERIVED, T>::release_resource(const std::string &l_resource
         Logger::get_instance().log(tempss.str());
         return;
     }
+    //resource found
     if(found_resource->second.first > 1){
         --found_resource->second.first;
     }

@@ -2,12 +2,16 @@
 // Created by Keen on 25.01.2021.
 //
 
+#include <fstream>
+#include <sstream>
 #include "GUI_Manager.hpp"
 #include "GUI_Button.hpp"
 #include "GUI_Label.hpp"
 #include "GUI_Scrollbar.hpp"
 #include "GUI_Textfield.hpp"
 #include "../Utils.hpp"
+#include "../Logger.hpp"
+
 GUI_Manager::GUI_Manager()
 // as long as StateManager does not register a local state, the default state of GUI_Manager is Global
 : m_gui_events(), m_interfaces(), m_gui_factory(), m_element_types(),
@@ -46,5 +50,15 @@ void GUI_Manager::draw() {
 
 void GUI_Manager::load_interface_from_file(StateType l_stateType, const std::string &l_file_name,
                                            const std::string &l_interface_name) {
-    std::string file_path = Utils::get_source_dir() + R"(\resources\???)" + l_file_name;
+    std::string file_path = Utils::get_source_dir() + R"(\resources\gui_interfaces)" + l_file_name;
+    std::ifstream file;
+    file.open(file_path);
+    if(!file.is_open()){
+        std::stringstream tempss{};
+        tempss  << "Error in GUI_Manager::load_interface_from_file: could not load file " << file_path;
+        Logger::get_instance().log(tempss.str());
+        return;
+    }
+
+    file.close();
 }
