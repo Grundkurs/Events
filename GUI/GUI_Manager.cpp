@@ -45,12 +45,18 @@ void GUI_Manager::update(const float &l_dt) {
 }
 
 void GUI_Manager::draw() {
-
+    auto current_state_interface_container = m_interfaces.find(m_current_state);
+    if(current_state_interface_container == m_interfaces.end()){
+        return;
+    }
+    for(auto& string_inferface_pair : current_state_interface_container->second){
+        GUI_Interface* interface = string_inferface_pair.second.get();
+    }
 }
 
 void GUI_Manager::load_interface_from_file(StateType l_stateType, const std::string &l_file_name,
                                            const std::string &l_interface_name) {
-    std::string file_path = Utils::get_source_dir() + R"(\resources\gui_interfaces)" + l_file_name;
+    std::string file_path = Utils::get_source_dir() + R"(\resources\gui_interfaces\)" + l_file_name;
     std::ifstream file;
     file.open(file_path);
     if(!file.is_open()){
