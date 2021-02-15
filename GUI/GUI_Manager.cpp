@@ -45,11 +45,11 @@ void GUI_Manager::update(const float &l_dt) {
 }
 
 void GUI_Manager::draw() {
-    auto current_state_interface_container = m_interfaces.find(m_current_state);
-    if(current_state_interface_container == m_interfaces.end()){
+    auto currentState_interfaceContainer_pair = m_interfaces.find(m_current_state);
+    if(currentState_interfaceContainer_pair == m_interfaces.end()){
         return;
     }
-    for(auto& string_inferface_pair : current_state_interface_container->second){
+    for(auto& string_inferface_pair : currentState_interfaceContainer_pair->second){
         GUI_Interface* interface = string_inferface_pair.second.get();
     }
 }
