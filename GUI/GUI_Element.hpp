@@ -20,7 +20,11 @@ using GUI_Styles = std::unordered_map<GUI_ElementState, GUI_Style>;
 class GUI_Element {
 public:
     GUI_Element(const std::string& l_name, GUI_ElementType l_elementType, GUI_Interface* l_owner);
+    // free function; defined in GUI_Element.cpp
+    friend std::stringstream& operator >> (std::stringstream& l_ss, GUI_Element* l_gui_element);
+protected:
 private:
+    virtual void readLine(std::stringstream& l_ss) = 0;
     GUI_Visual              m_visual;
     std::string             m_name;
     sf::Vector2f            m_position;

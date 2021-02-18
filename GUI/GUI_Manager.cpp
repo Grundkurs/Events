@@ -60,9 +60,7 @@ void GUI_Manager::load_interface_from_file(StateType l_stateType, const std::str
     std::ifstream file;
     file.open(file_path);
     if(!file.is_open()){
-        std::stringstream tempss{};
-        tempss  << "Error in GUI_Manager::load_interface_from_file: could not load file " << file_path;
-        Logger::get_instance().log(tempss.str());
+        Logger::get_instance().log("Error in GUI_Manager::load_interface_from_file: could not load file " + file_path);
         return;
     }
 

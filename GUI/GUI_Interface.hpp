@@ -7,7 +7,9 @@
 
 #include "GUI_Element.hpp"
 class GUI_Interface : public GUI_Element{
-
+public:
+private:
+    void readLine(std::stringstream &l_ss) override;
 };
 
 

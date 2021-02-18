@@ -12,6 +12,7 @@ class GUI_Textfield : public GUI_Element{
 public:
     GUI_Textfield(const std::string& l_name, GUI_Interface* l_owner);
 private:
+    void readLine(std::stringstream &l_ss) override;
 };
 
 

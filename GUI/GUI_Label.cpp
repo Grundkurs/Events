@@ -8,3 +8,7 @@ GUI_Label::GUI_Label(const std::string &l_name, GUI_Interface *l_owner)
 : GUI_Element(l_name, GUI_ElementType::Label, l_owner){
 
 }
+
+void GUI_Label::readLine(std::stringstream &l_ss) {
+
+}
