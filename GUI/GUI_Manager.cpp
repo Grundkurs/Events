@@ -82,9 +82,18 @@ void GUI_Manager::load_interface_from_file(StateType l_stateType, const std::str
                 temp_ss << "WARNING in GUI_Manager::load_interface_from_file: trying to read "
                            "Element before Interface in file " << l_file_name;
                 Logger::get_instance().log(temp_ss.str());
+                continue;
             }
         }
     }
 
     file.close();
+}
+
+void GUI_Manager::add_interface(const std::string &l_interface_name, StateType l_stateType) {
+
+}
+
+GUI_Interface* GUI_Manager::get_interface(const std::string &l_interface_name, StateType l_stateType) {
+    return nullptr;
 }
