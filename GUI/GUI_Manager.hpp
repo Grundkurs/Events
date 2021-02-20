@@ -33,6 +33,8 @@ public:
     void register_gui_element(GUI_ElementType l_gui_type);
 
     void add_event(const GUI_Event& l_gui_event);
+    void add_interface(const std::string& l_interface_name, StateType l_stateType);
+    GUI_Interface* get_interface(const std::string& l_interface_name, StateType l_stateType);
     void set_shared_context(SharedContext* l_shared_context);
     void set_state(StateType l_stateType);
     void load_interface_from_file(StateType l_stateType, const std::string& l_file_name, const std::string& l_interface_name);

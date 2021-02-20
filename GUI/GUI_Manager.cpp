@@ -63,6 +63,28 @@ void GUI_Manager::load_interface_from_file(StateType l_stateType, const std::str
         Logger::get_instance().log("Error in GUI_Manager::load_interface_from_file: could not load file " + file_path);
         return;
     }
+    std::string line{};
+    while(std::getline(file,line)){
+        if(line.empty()) { continue; }
+        if(line[0] =='|') { continue; }
+        if(line[0] =='#') { continue; }
+
+        std::stringstream ss{line};
+        std::string entry{};
+        std::string interface_name{};
+        ss >> entry;
+        if(entry == "Interface"){
+            ss >> interface_name;
+        }
+        else if(entry == "Element"){
+            if(interface_name.empty()){
+                std::stringstream temp_ss;
+                temp_ss << "WARNING in GUI_Manager::load_interface_from_file: trying to read "
+                           "Element before Interface in file " << l_file_name;
+                Logger::get_instance().log(temp_ss.str());
+            }
+        }
+    }
 
     file.close();
 }
