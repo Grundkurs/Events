@@ -64,6 +64,7 @@ void GUI_Manager::load_interface_from_file(StateType l_stateType, const std::str
         return;
     }
     std::string line{};
+    std::string interface_name{};
     while(std::getline(file,line)){
         if(line.empty()) { continue; }
         if(line[0] =='|') { continue; }
@@ -71,7 +72,6 @@ void GUI_Manager::load_interface_from_file(StateType l_stateType, const std::str
 
         std::stringstream ss{line};
         std::string entry{};
-        std::string interface_name{};
         ss >> entry;
         if(entry == "Interface"){
             ss >> interface_name;
