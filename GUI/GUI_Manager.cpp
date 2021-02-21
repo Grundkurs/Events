@@ -74,7 +74,8 @@ void GUI_Manager::load_interface_from_file(StateType l_stateType, const std::str
         std::string entry{};
         ss >> entry;
         if(entry == "Interface"){
-            ss >> interface_name;
+            std::string style{};
+            ss >> interface_name >> style;
         }
         else if(entry == "Element"){
             if(interface_name.empty()){
