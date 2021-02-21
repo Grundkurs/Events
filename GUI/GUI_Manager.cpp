@@ -76,7 +76,13 @@ void GUI_Manager::load_interface_from_file(StateType l_stateType, const std::str
         if(entry == "Interface"){
             std::string style{};
             ss >> interface_name >> style;
-
+            if(!add_interface(interface_name, l_stateType)){
+                std::stringstream temp_ss;
+                temp_ss << "ERROR in GUI_Manager::load_interface_from_file when invoking GUI_Manager::add_interface: "
+                           "could not create interface " << interface_name;
+                Logger::get_instance().log(temp_ss.str());
+                return;
+            }
             GUI_Interface* interface = get_interface(l_stateType, interface_name);
             if(!load_style(style, interface)){
 
@@ -99,8 +105,9 @@ bool GUI_Manager::load_style(const std::string &l_style_name, GUI_Element *l_ele
     return false;
 }
 
-void GUI_Manager::add_interface(const std::string &l_interface_name, StateType l_stateType) {
+bool GUI_Manager::add_interface(const std::string &l_interface_name, StateType l_stateType) {
 
+    return true;
 }
 
 GUI_Interface* GUI_Manager::get_interface(StateType l_stateType, const std::string& l_interface_name) {
