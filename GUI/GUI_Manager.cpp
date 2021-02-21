@@ -76,6 +76,9 @@ void GUI_Manager::load_interface_from_file(StateType l_stateType, const std::str
         if(entry == "Interface"){
             std::string style{};
             ss >> interface_name >> style;
+
+            GUI_Interface* interface = getInterface(l_stateType, interface_name);
+            if(!load_style())
         }
         else if(entry == "Element"){
             if(interface_name.empty()){
@@ -87,8 +90,11 @@ void GUI_Manager::load_interface_from_file(StateType l_stateType, const std::str
             }
         }
     }
-
     file.close();
+}
+
+bool GUI_Manager::load_style(const std::string &l_style_name, GUI_Element *l_element) {
+    return false;
 }
 
 void GUI_Manager::add_interface(const std::string &l_interface_name, StateType l_stateType) {

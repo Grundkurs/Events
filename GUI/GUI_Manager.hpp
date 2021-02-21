@@ -28,6 +28,7 @@ public:
         return true;
     }
     inline SharedContext* get_shared_context() const { return m_shared_context; }
+    GUI_Interface* getInterface(StateType l_statetype, const std::string& l_interface_name);
 
     template<typename T>
     void register_gui_element(GUI_ElementType l_gui_type);
@@ -38,6 +39,7 @@ public:
     void set_shared_context(SharedContext* l_shared_context);
     void set_state(StateType l_stateType);
     void load_interface_from_file(StateType l_stateType, const std::string& l_file_name, const std::string& l_interface_name);
+    bool load_style(const std::string& l_style_name, GUI_Element* l_element);
 
     void update(const float& l_dt);
     void draw();
