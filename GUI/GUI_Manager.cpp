@@ -9,6 +9,7 @@
 #include "GUI_Label.hpp"
 #include "GUI_Scrollbar.hpp"
 #include "GUI_Textfield.hpp"
+#include "GUI_Interface.hpp"
 #include "../Utils.hpp"
 #include "../Logger.hpp"
 
@@ -44,13 +45,17 @@ void GUI_Manager::update(const float &l_dt) {
 
 }
 
-void GUI_Manager::draw() {
+void GUI_Manager::draw(sf::RenderWindow* l_renderWindow) {
     auto currentState_interfaceContainer_pair = m_interfaces.find(m_current_state);
     if(currentState_interfaceContainer_pair == m_interfaces.end()){
         return;
     }
+    // render all interfaces in current state
     for(auto& string_inferface_pair : currentState_interfaceContainer_pair->second){
         GUI_Interface* interface = string_inferface_pair.second.get();
+        // apply special drawing if required before "normal" draw of interface
+        if(interface->needs_redraw()) { interface->reDraw();}
+        interface->draw(l_renderWindow);
     }
 }
 
@@ -84,8 +89,19 @@ void GUI_Manager::load_interface_from_file(StateType l_stateType, const std::str
                 return;
             }
             GUI_Interface* interface = get_interface(l_stateType, interface_name);
+            if(!interface){
+                Logger::get_instance().log("ERROR in GUI_Manager::load_interface_from_file when calling \"get_interface\":"
+                                           "interface \"" + interface_name+ "\" not found in m_interfaces");
+                return;
+            }
+            //load data from interface-file into interface
+            ss >> interface;
             if(!load_style(style, interface)){
-
+                std::stringstream temp_ss;
+                temp_ss << "WARNING in GUI_Manager::load_interface_from_file: could not load style \"" << style  <<
+                "\" for interface named \"" << interface_name << "\"";
+                Logger::get_instance().log(temp_ss.str());
+                continue;
             }
         }
         else if(entry == "Element"){
@@ -106,11 +122,14 @@ bool GUI_Manager::load_style(const std::string &l_style_name, GUI_Element *l_ele
 }
 
 bool GUI_Manager::add_interface(const std::string &l_interface_name, StateType l_stateType) {
-
-    return true;
+    auto interface_container_it = m_interfaces.emplace(l_stateType, InterfaceContainer{}).first;
+    return interface_container_it->second.emplace(l_interface_name, std::make_unique<GUI_Interface>(l_interface_name, this)).second;
 }
 
 GUI_Interface* GUI_Manager::get_interface(StateType l_stateType, const std::string& l_interface_name) {
-    return nullptr;
+    auto found_interface_container = m_interfaces.find(l_stateType);
+    if(found_interface_container == m_interfaces.end()){ return nullptr; }
+    auto found_interface = found_interface_container->second.find(l_interface_name);
+    return found_interface == found_interface_container->second.end() ? nullptr : found_interface->second.get();
 }
 

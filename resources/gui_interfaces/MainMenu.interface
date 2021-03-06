@@ -1,3 +1,5 @@
-#GUI_Type       Name        StyleFile           PositionX       PositionY           Moveable    Title       Title_Text
-Interface       MainMenu    MainMenu.style          0               0               NonMovable  NoTitle     "Main Menu"
-Element         Label       MainMenuLabel.style     0               80              NonMovable       "Play"
+#GUI_Type       Name            StyleFile               PositionX       PositionY           Moveable        Title       Title_Text
+Interface       MainMenu        MainMenu.style          0               0                   NonMovable      NoTitle     "Main Menu"
+
+#GUI_Type       Element_Type    Element_Name            PositionX       PositionY           StyleFile                Title_Text
+Element         Label           Play                    80               100                MainMenuLabel.style      "Play"

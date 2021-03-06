@@ -12,3 +12,7 @@ GUI_Label::GUI_Label(const std::string &l_name, GUI_Interface *l_owner)
 void GUI_Label::readLine(std::stringstream &l_ss) {
 
 }
+
+void GUI_Label::draw(sf::RenderWindow *l_renderWindow) {
+
+}

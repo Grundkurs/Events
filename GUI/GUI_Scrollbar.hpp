@@ -10,6 +10,9 @@
 class GUI_Scrollbar : public GUI_Element{
 public:
     GUI_Scrollbar(const std::string& l_name, GUI_Interface* l_owner);
+
+    void draw(sf::RenderWindow *l_renderWindow) override;
+
 private:
     void readLine(std::stringstream &l_ss) override;
 };

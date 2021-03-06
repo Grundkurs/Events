@@ -41,7 +41,7 @@ public:
     bool load_style(const std::string& l_style_name, GUI_Element* l_element);
 
     void update(const float& l_dt);
-    void draw();
+    void draw(sf::RenderWindow* l_renderWindow);
 
 private:
     GUI_Events              m_gui_events;

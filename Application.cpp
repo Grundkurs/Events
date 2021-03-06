@@ -56,7 +56,7 @@ void Application::render() {
 
     sf::View temp = renderWindow->getView();
     renderWindow->setView(renderWindow->getDefaultView());
-    m_gui_manager.draw();
+    m_gui_manager.draw(m_window.get_renderWindow());
     renderWindow->setView(temp);
 
     m_window.display();
