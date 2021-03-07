@@ -90,8 +90,8 @@ void GUI_Manager::load_interface_from_file(StateType l_stateType, const std::str
             }
             GUI_Interface* interface = get_interface(l_stateType, interface_name);
             if(!interface){
-                Logger::get_instance().log("ERROR in GUI_Manager::load_interface_from_file when calling \"get_interface\":"
-                                           "interface \"" + interface_name+ "\" not found in m_interfaces");
+                Logger::get_instance().log("ERROR in GUI_Manager::load_interface_from_file when calling method GUI_Manager::get_interface:"
+                                           "interface \"" + interface_name + "\" not found in m_interfaces");
                 return;
             }
             //load data from interface-file into interface

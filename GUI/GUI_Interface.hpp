@@ -13,8 +13,16 @@ public:
     GUI_Interface(const std::string& l_name, GUI_Manager* l_gui_manager);
     void draw(sf::RenderWindow* l_renderWindow) override;
     void reDraw();
+
 private:
     void readLine(std::stringstream &l_ss) override;
+
+private:
+    std::string             m_title;
+    GUI_Manager*            m_gui_manager;
+    bool                    m_is_movable;
+    bool                    m_is_title_shown;
+
 };
 
 
