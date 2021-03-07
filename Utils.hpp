@@ -9,6 +9,7 @@
 
 namespace Utils{
     std::string get_source_dir();
+    void retrieve_quoted_text(std::stringstream& l_ss, std::string& l_text);
 }
 
 

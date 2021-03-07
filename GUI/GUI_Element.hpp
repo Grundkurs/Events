@@ -32,8 +32,7 @@ public:
     virtual void draw(sf::RenderWindow* l_renderWindow) = 0;
 
 protected:
-private:
-    virtual void readLine(std::stringstream& l_ss) = 0;
+
     GUI_Visual              m_visual;
     std::string             m_name;
     sf::Vector2f            m_position;
@@ -45,6 +44,10 @@ private:
     bool                    m_needs_redraw;
     bool                    m_active;
     bool                    m_is_control;
+
+private:
+    virtual void readLine(std::stringstream& l_ss) = 0;
+
 };
 
 

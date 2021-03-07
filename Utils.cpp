@@ -15,3 +15,9 @@ std::string Utils::get_source_dir() {
     }
     return path;
 }
+
+void Utils::retrieve_quoted_text(std::stringstream &l_ss, std::string &l_text) {
+    std::string temp = l_text;
+
+    l_text = temp;
+}
